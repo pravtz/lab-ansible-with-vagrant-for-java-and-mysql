@@ -1,0 +1,4 @@
+- name: Upgrade all packet do s.o
+  yum:
+    name: '*'
+    state: latest
