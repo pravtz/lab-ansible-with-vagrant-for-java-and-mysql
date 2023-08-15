@@ -1,0 +1,26 @@
+---
+- name: ==> Configure database server
+  hosts: db01
+
+  user: vagrant
+  become: yes
+  vars_files:
+    - var/main.yml
+  vars:
+    - dbhost: "db01"
+    - dbname: "notes"
+    - dbusername: "notesapp"
+    - dbpassword: "devopsteste"
+  tasks:
+    - name: ==> configure hosts ansible lab
+      lineinfile: 
+        dest: /etc/hosts
+        state: present 
+        line: "{{item}}"
+      with_items: 
+        - 192.168.56.2  control-node
+        - 192.168.56.113  app01
+        - 192.168.56.114  db01s
+  roles:
+    - configurancao-default-so
+    - role: geerlingguy.mysql
